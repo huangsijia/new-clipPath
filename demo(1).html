@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            width: 400px;
+            height: 400px;
+            position:relative;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+
+    </div>
+    <script>
+        var box = document.getElementById('box')
+        create(box,6,['red','blue','pink','black','yellow','green'])
+
+
+        function create(parent,item,colorArr){
+            // 起始角度
+            var Rotate = 0;
+            for(var i = 0 ;i < item; i++){
+                var div = document.createElement('div')
+                div.className = 'L'+i
+                div.style.width = '100%'
+                div.style.height = '100%'
+                div.style.position = 'absolute'
+                div.style.backgroundColor = colorArr[i]
+                var radius = 100;
+                var innerRadius = 50;
+                var r = Math.PI/180;
+
+                var str1 = ''
+                for(var j = 0 ; j < 360/item;j++){
+
+                    var x = radius*Math.cos(r*(j))
+                    var y = radius*Math.sin(r*(j))
+                    str1+=x+'px '+y+'px,'
+                }
+
+                var str2 = ''
+                for(var k = 0 ; k < 360/item;k++){
+                    var x = innerRadius*Math.cos(r*(k))
+                    var y = innerRadius*Math.sin(r*(k))
+                    str2+=x+'px '+y+'px,'
+                }
+
+
+                var str2 = str2.split(',').reverse().join(',')
+
+                div.style.clipPath = 'polygon('+str2.slice(1)+','+str1.slice(0,str1.length-1)+')'
+                div.style.top='50%';
+                div.style.left='50%';
+                div.style.transformOrigin="0 0"
+                div.style.transform = 'rotateZ('+Rotate+'deg)'
+                parent.appendChild(div)
+                Rotate+=360/item;
+                console.log(Rotate)
+            }
+        }
+
+    </script>
+</body>
+</html>
